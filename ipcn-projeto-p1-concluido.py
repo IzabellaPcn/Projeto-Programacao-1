@@ -10,7 +10,7 @@ Data: 22-05-2018
 Copyright(c) 2018 Izabella Priscylla da Costa Nascimento
 """
 
-from datetime import *
+from datetime import datetime
 
 
 def lerUsuario():
@@ -42,6 +42,7 @@ def lerUsuario():
             dicionario[lista[0]] = (lista[1], lista[2])
         lista=[]
     arq.close()
+    print(dicionario)
     return(dicionario)
 
 
@@ -91,10 +92,11 @@ def adicionarUsuario(bancoDeDados):
         if login == x:
             achou = True
     if achou == False:
-        senha=input("Didite a senha: ")
+        senha=input("Digite a senha: ")
         print("")
         bancoDeDados[login] = (senha,"Visitante")
         log(usuario, "adicionou_usuário")
+        print("Usuário ", login, " adicionado com sucesso.\n")
     else:
         print("\nLogin já cadastrado.\n")
     return bancoDeDados
@@ -152,6 +154,7 @@ def lerElemento():
             dicionarioElementos[lista[0]]=(lista[1],lista[2],lista[3],lista[4],lista[5],lista[6])
         lista=[]
     arq.close()
+    print(dicionarioElementos)
     return(dicionarioElementos)
 
 
@@ -223,7 +226,6 @@ def buscarElemento(bancoDeDadosElementos):
         return False
     elif opcao==3:
         autor = input("Digite o título: ")
-        achou=False
         for atributo in bancoDeDadosElementos.items():
             if atributo[1][1] == autor:
                 return atributo[0]
@@ -266,7 +268,6 @@ def log(usuario,acao):
         dia="0"+dia
     if len(mes)==1:
         mes="0"+mes
-    lista=[]
     arq.write(usuario + " " + acao + " em " +dia+"-"+mes+"-"+str(tempo.year) + " as "
               + str(tempo.hour) + ":" + str(tempo.minute) + ":" + str(tempo.second)+"\n")
     arq.close()
@@ -377,9 +378,9 @@ def mainNivelBibliotecario():
                     "1 - Adicionar usuário\n"
                     "2 - Remover Usuário\n"
                     "3 - Modificar nível do usuário\n"
-                    "4 - Remover livro\n"
-                    "5 - Adicionar livro\n"
-                    "6 - Atualizar livro\n"
+                    "4 - Adicionar livro\n"
+                    "5 - Atualizar livro\n"
+                    "6 - Remover livro\n"
                     "7 - Buscar livro\n"
                     "8 - Buscar nos logs\n"
                     "9 - Logout "))
@@ -449,11 +450,11 @@ while(continuarGeral==True):
                 elif opcao==3:
                     modificarNivelUsuario(bancoDeDados)
                 elif opcao==4:
-                    removerElemento(bancoDeDadosElementos)
-                elif opcao==5:
                     adicionarElemento(bancoDeDadosElementos)
+                elif opcao==5:
+                    atualizarElemento(bancoDeDadosElementos, usuario)
                 elif opcao==6:
-                    atualizarElemento(bancoDeDadosElementos,usuario)
+                    removerElemento(bancoDeDadosElementos)
                 elif opcao==7:
                     buscarNaTela(bancoDeDadosElementos)
                 elif opcao==8:
@@ -471,7 +472,7 @@ while(continuarGeral==True):
                 if opcao==1:
                     adicionarElemento(bancoDeDadosElementos)
                 elif opcao==2:
-                    atualizarElemento(bancoDeDadosElementos)
+                    atualizarElemento(bancoDeDadosElementos, usuario)
                 elif opcao==3:
                     buscarNaTela(bancoDeDadosElementos)
                 elif opcao==4:
