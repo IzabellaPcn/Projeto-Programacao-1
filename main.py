@@ -14,7 +14,8 @@ from datetime import datetime
 
 
 def lerUsuario():
-    """Função para ler o usuário e retorna o dicionário contento o cadastros dos usuários, com senha e nível do usuário"""
+    """Função para ler o usuário do arquivo e retorna o dicionário contento o cadastros dos usuários,
+     com senha e nível do usuário"""
     arq=open("usuarios.txt","r")
     lista=[]
     dicionario={}
@@ -46,7 +47,7 @@ def lerUsuario():
     return(dicionario)
 
 
-def gravarArquivo(dicionario):
+def gravarUsuarioArquivo(dicionario):
     """Função para gravar o dicionario no arquivo"""
     arq=open("usuarios.txt","w")
     string=""
@@ -59,7 +60,7 @@ def gravarArquivo(dicionario):
     arq.close()
 
 
-def buscarNivelLogin(bancoDeDados,usuario):
+def buscarNivelUsuario(bancoDeDados,usuario):
     """Função para buscar o nível do usuário"""
     nivel=bancoDeDados[usuario][1]
     return nivel
@@ -83,6 +84,23 @@ def nivelUsuario():
         return nivelUsuario()
     return nivel
 
+def modificarNivelUsuario(bancoDeDados):
+    """Função para modificar o nível do usuário"""
+    print("")
+    print("Usuários cadastrados:")
+    listarUsuarios(bancoDeDados)
+    usuario = input("\nQual usuário deseja modificar? ")
+    print("")
+    print("Para qual nível deseja modificar?")
+    nivelAntigo = bancoDeDados[usuario][1]
+    bancoDeDados[usuario]=(bancoDeDados[usuario][0],nivelUsuario())
+    log(usuario, "modificou_nível_de_usuário")
+    print("Nível do usuário '", usuario,"' modificado de ",nivelAntigo," para ",bancoDeDados[usuario][1],".\n")
+    return bancoDeDados
+
+def listarUsuarios(bancoDeDados):
+    for chave in bancoDeDados.keys():
+        print(chave)
 
 def adicionarUsuario(bancoDeDados):
     """Função para adicionar um novo usuário do bando de dados"""
@@ -96,7 +114,7 @@ def adicionarUsuario(bancoDeDados):
         print("")
         bancoDeDados[login] = (senha,"Visitante")
         log(usuario, "adicionou_usuário")
-        print("Usuário ", login, " adicionado com sucesso.\n")
+        print("Usuário '", login, "' adicionado com sucesso.\n")
     else:
         print("\nLogin já cadastrado.\n")
     return bancoDeDados
@@ -104,24 +122,16 @@ def adicionarUsuario(bancoDeDados):
 
 def removerUsuario(bancoDeDados):
     """Função para remover um usuário do bando de dados"""
+    print("\nQual usuário deseja remover?")
+    listarUsuarios(bancoDeDados)
     login = input("\nDigite o login do usuário: ")
     print("")
     if login in bancoDeDados:
         bancoDeDados.pop(login)
         log(usuario, "removeu_usuário")
+        print("Usuário removido com sucesso.\n")
     else:
         print("Usuário não consta no sistema.\n")
-    return bancoDeDados
-
-
-def modificarNivelUsuario(bancoDeDados):
-    """Função para modificar o nível do usuário"""
-    print("")
-    usuario=input("Qual usuário deseja modificar? ")
-    print("")
-    print("Para qual nível deseja modificar?")
-    bancoDeDados[usuario]=(bancoDeDados[usuario][0],nivelUsuario())
-    log(usuario, "modificou_nível_de_usuário")
     return bancoDeDados
 
 
@@ -372,7 +382,7 @@ def buscarNaTela(bancoDeDadosElementos):
         print("\nLivro não cadastrado no sistema.\n")
 
 
-def mainNivelBibliotecario():
+def menuNivelBibliotecario():
     """Função menu do usuário maior nível"""
     opcao=int(input("-------O que deseja fazer?-------\n"
                     "1 - Adicionar usuário\n"
@@ -387,7 +397,7 @@ def mainNivelBibliotecario():
     return opcao
 
 
-def mainNivelAtendente():
+def menuNivelAtendente():
     """Função menu do usuário de nível intermediário """
     opcao=int(input("-------O que deseja fazer?-------\n"
                     "1 - Adicionar livro\n"
@@ -397,7 +407,7 @@ def mainNivelAtendente():
     return opcao
 
 
-def mainNivelVisitante():
+def menuNivelVisitante():
     """Função menu do usuário de nível visitante"""
     opcao=int(input("-------O que deseja fazer?-------\n"
                     "1 - Buscar livro\n"
@@ -437,12 +447,12 @@ while(continuarGeral==True):
     print("")
     if verificar==1:
         usuario=login(bancoDeDados)
-        nivel=buscarNivelLogin(bancoDeDados,usuario)
+        nivel=buscarNivelUsuario(bancoDeDados,usuario)
         if nivel=="Bibliotecário":
             continuar=True
             while continuar==True:
                 """Laço para encerrar o nível do bibliotecário"""
-                opcao=mainNivelBibliotecario()
+                opcao=menuNivelBibliotecario()
                 if opcao==1:
                     bancoDeDados = adicionarUsuario(bancoDeDados)
                 elif opcao==2:
@@ -468,7 +478,7 @@ while(continuarGeral==True):
             continuar = True
             while continuar == True:
                 """Laço para encerrar o nível do atendente"""
-                opcao=mainNivelAtendente()
+                opcao=menuNivelAtendente()
                 if opcao==1:
                     adicionarElemento(bancoDeDadosElementos)
                 elif opcao==2:
@@ -484,7 +494,7 @@ while(continuarGeral==True):
             continuar = True
             while continuar == True:
                 """Laço para encerrar o nível do visitante"""
-                opcao=mainNivelVisitante()
+                opcao=menuNivelVisitante()
                 if opcao==1:
                     buscarNaTela(bancoDeDadosElementos)
                 elif opcao==2:
@@ -497,6 +507,6 @@ while(continuarGeral==True):
     else:
         print("Opção não encontrada, digite novamente.")
 
-gravarArquivo(bancoDeDados)
+gravarUsuarioArquivo(bancoDeDados)
 gravarElementoArquivo(bancoDeDadosElementos)
 ordenarElementos(bancoDeDadosElementos)
