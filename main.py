@@ -84,6 +84,7 @@ def nivelUsuario():
         return nivelUsuario()
     return nivel
 
+
 def modificarNivelUsuario(bancoDeDados):
     """Função para modificar o nível do usuário"""
     print("")
@@ -98,9 +99,11 @@ def modificarNivelUsuario(bancoDeDados):
     print("Nível do usuário '", usuario,"' modificado de ",nivelAntigo," para ",bancoDeDados[usuario][1],".\n")
     return bancoDeDados
 
+
 def listarUsuarios(bancoDeDados):
     for chave in bancoDeDados.keys():
         print(chave)
+
 
 def adicionarUsuario(bancoDeDados):
     """Função para adicionar um novo usuário do bando de dados"""
@@ -198,6 +201,7 @@ def adicionarElemento(bancoDeDadosElementos):
         print("")
         bancoDeDadosElementos[ISBN] = (titulo,autor,numeroDeChamada,edicao,acervo,anoDePublicacao)
         log(usuario, "adicionou_elemento")
+        print("Livro adicionadao com sucesso.\n")
     else:
         print("\nISBN já cadastrado.\n")
     return bancoDeDadosElementos
@@ -205,13 +209,16 @@ def adicionarElemento(bancoDeDadosElementos):
 
 def removerElemento(bancoDeDadosElementos):
     """Função para remover livro"""
-    ISBN = input("\nDigite o ISBN: ")
+    print("")
+    listarElemento(bancoDeDadosElementos, 4)
+    ISBN = input("Digite o ISBN: ")
     print("")
     if ISBN in bancoDeDadosElementos:
         bancoDeDadosElementos.pop(ISBN)
         log(usuario, "removeu_elemento")
+        print("Livro removido com sucesso.\n")
     else:
-        print("\nLivro não cadastrado no sistema.")
+        print("Livro não cadastrado no sistema.\n")
     return bancoDeDadosElementos
 
 
@@ -223,18 +230,21 @@ def buscarElemento(bancoDeDadosElementos):
                     "3 - Autor "))
     print("")
     if opcao==1:
+        listarElemento(bancoDeDadosElementos, 1)
         ISBN=input("Digite o ISBN: ")
         if ISBN in bancoDeDadosElementos:
             return ISBN
         else:
             return False
     elif opcao==2:
+        listarElemento(bancoDeDadosElementos, 2)
         titulo=input("Digite o título: ")
         for atributo in bancoDeDadosElementos.items():
             if atributo[1][0]==titulo:
                 return atributo[0]
         return False
     elif opcao==3:
+        listarElemento(bancoDeDadosElementos, 3)
         autor = input("Digite o título: ")
         for atributo in bancoDeDadosElementos.items():
             if atributo[1][1] == autor:
@@ -243,6 +253,7 @@ def buscarElemento(bancoDeDadosElementos):
     else:
         print("Opção não encontrada, digite novamente.")
         buscarElemento(bancoDeDadosElementos)
+
 
 def atualizarElemento(bancoDeDadosElementos,usuario):
     """Função para atualizar os livros"""
@@ -262,10 +273,25 @@ def atualizarElemento(bancoDeDadosElementos,usuario):
             return atualizarElemento(bancoDeDadosElementos,usuario)
         elementosDaChave = list(bancoDeDadosElementos[opcao])
         elementosDaChave[atualizar-1] = input("\nDigite o novo atributo: ")
-        print("")
+        print("\nLivro atualizado com sucesso.\n")
         bancoDeDadosElementos[opcao]=tuple(elementosDaChave)
         log(usuario,"atualizou_elemento")
     return bancoDeDadosElementos
+
+
+def listarElemento(bancoDeDadosElementos, opcaoListar):
+    if opcaoListar == 1:
+        for chave in bancoDeDadosElementos.keys():
+            print("ISBN: ",chave,"\n")
+    elif opcaoListar == 2:
+        for chave in bancoDeDadosElementos.keys():
+            print("Título: ",bancoDeDadosElementos[chave][0],"\n")
+    elif opcaoListar == 3:
+        for chave in bancoDeDadosElementos.keys():
+            print("Autor: ",bancoDeDadosElementos[chave][1],"\n")
+    else:
+        for chave in bancoDeDadosElementos.keys():
+            print("ISBN: ",chave,", Título: ",bancoDeDadosElementos[chave][0])
 
 
 def log(usuario,acao):
