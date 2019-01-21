@@ -147,3 +147,5 @@ adm deslogou em 16-01-2019 as 1:38:7
 adm logou em 16-01-2019 as 1:38:13
 adm adicionou_elemento em 16-01-2019 as 1:39:0
 adm deslogou em 16-01-2019 as 1:39:56
+adm logou em 21-01-2019 as 15:43:10
+adm deslogou em 21-01-2019 as 15:43:12
