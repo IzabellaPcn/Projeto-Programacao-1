@@ -149,3 +149,11 @@ adm adicionou_elemento em 16-01-2019 as 1:39:0
 adm deslogou em 16-01-2019 as 1:39:56
 adm logou em 21-01-2019 as 15:43:10
 adm deslogou em 21-01-2019 as 15:43:12
+adm logou em 23-01-2019 as 0:1:6
+adm atualizou_elemento em 23-01-2019 as 0:1:42
+adm deslogou em 23-01-2019 as 0:1:43
+adm logou em 23-01-2019 as 0:9:16
+adm adicionou_usuário em 23-01-2019 as 0:9:24
+adm deslogou em 23-01-2019 as 0:9:27
+igor logou em 23-01-2019 as 0:24:28
+igor deslogou em 23-01-2019 as 0:24:31
