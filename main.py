@@ -126,6 +126,7 @@ while(continuarGeral == True):
     else:
         print("Opção não encontrada, digite novamente.")
 
+
 gravarUsuarioArquivo(bancoDeDados)
 gravarElementoArquivo(bancoDeDadosElementos)
 ordenarElementos(bancoDeDadosElementos)

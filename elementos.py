@@ -10,6 +10,7 @@ Data: 22-05-2018
 Copyright(c) 2018 Izabella Priscylla da Costa Nascimento
 """
 
+
 from criptografia import criptografar, descriptografar
 from log import log, buscarLog
 from usuarios import lerUsuario, gravarUsuarioArquivo, buscarNivelUsuario, modificarNivelUsuario, listarUsuarios
@@ -91,8 +92,9 @@ def adicionarElemento(bancoDeDadosElementos, usuario):
 def removerElemento(bancoDeDadosElementos, usuario):
     """Função para remover livro"""
     print("")
+    print("Qual livro deseja remover?\n")
     listarElemento(bancoDeDadosElementos, 4)
-    ISBN = input("Digite o ISBN: ")
+    ISBN = input("\nDigite o ISBN: ")
     print("")
     if ISBN in bancoDeDadosElementos:
         bancoDeDadosElementos.pop(ISBN)
@@ -106,13 +108,13 @@ def removerElemento(bancoDeDadosElementos, usuario):
 def listarElemento(bancoDeDadosElementos, opcaoListar):
     if opcaoListar == 1:
         for chave in bancoDeDadosElementos.keys():
-            print("ISBN: ", chave, "\n")
+            print("ISBN: ", chave)
     elif opcaoListar == 2:
         for chave in bancoDeDadosElementos.keys():
-            print("Título: ", bancoDeDadosElementos[chave][0], "\n")
+            print("Título: ", bancoDeDadosElementos[chave][0])
     elif opcaoListar == 3:
         for chave in bancoDeDadosElementos.keys():
-            print("Autor: ", bancoDeDadosElementos[chave][1], "\n")
+            print("Autor: ", bancoDeDadosElementos[chave][1])
     else:
         for chave in bancoDeDadosElementos.keys():
             print("ISBN: ", chave, ", Título: ",
@@ -128,21 +130,21 @@ def buscarElemento(bancoDeDadosElementos):
     print("")
     if opcao == 1:
         listarElemento(bancoDeDadosElementos, 1)
-        ISBN = input("Digite o ISBN: ")
+        ISBN = input("\nDigite o ISBN: ")
         if ISBN in bancoDeDadosElementos:
             return ISBN
         else:
             return False
     elif opcao == 2:
         listarElemento(bancoDeDadosElementos, 2)
-        titulo = input("Digite o título: ")
+        titulo = input("\nDigite o título: ")
         for atributo in bancoDeDadosElementos.items():
             if atributo[1][0] == titulo:
                 return atributo[0]
         return False
     elif opcao == 3:
         listarElemento(bancoDeDadosElementos, 3)
-        autor = input("Digite o título: ")
+        autor = input("\nDigite o autor: ")
         for atributo in bancoDeDadosElementos.items():
             if atributo[1][1] == autor:
                 return atributo[0]
@@ -198,9 +200,10 @@ def buscarNaTela(bancoDeDadosElementos, usuario):
     """Função para imprimir na tela a busca do elemento"""
     ISBN = buscarElemento(bancoDeDadosElementos)
     if (ISBN != False):
-        print("\nISBN: " + ISBN + "\nTítulo: " + bancoDeDadosElementos[ISBN][0] + "\nAutor: " + bancoDeDadosElementos[ISBN][1] +
-              "\nNúmero de chamada: " + bancoDeDadosElementos[ISBN][2] + "\nEdição: " + bancoDeDadosElementos[ISBN][3] +
-              "\nAcervo: " + bancoDeDadosElementos[ISBN][4] + "\nAno de publicação: " + bancoDeDadosElementos[ISBN][5])
+        print("\nISBN: " + ISBN + "\nTítulo: " + bancoDeDadosElementos[ISBN][0] + "\nAutor: " + \
+        bancoDeDadosElementos[ISBN][1] + "\nNúmero de chamada: " + bancoDeDadosElementos[ISBN][2] + \
+        "\nEdição: " + bancoDeDadosElementos[ISBN][3] + "\nAcervo: " + bancoDeDadosElementos[ISBN][4] + \
+        "\nAno de publicação: " + bancoDeDadosElementos[ISBN][5])
         print("")
         log(usuario, "buscou_elemento")
     else:

@@ -10,6 +10,7 @@ Data: 22-05-2018
 Copyright(c) 2018 Izabella Priscylla da Costa Nascimento
 """
 
+
 def criptografar(x):
     """Função para criptografar"""
     chave1Publica,chave2Publica= lerChaves("chavePublica")

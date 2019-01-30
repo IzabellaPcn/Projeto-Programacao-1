@@ -10,6 +10,7 @@ Data: 22-05-2018
 Copyright(c) 2018 Izabella Priscylla da Costa Nascimento
 """
 
+
 from criptografia import criptografar, descriptografar
 from log import log, buscarLog
 
@@ -61,12 +62,6 @@ def gravarUsuarioArquivo(dicionario):
     arq.close()
 
 
-def buscarNivelUsuario(bancoDeDados, usuario):
-    """Função para buscar o nível do usuário"""
-    nivel = bancoDeDados[usuario][1]
-    return nivel
-
-
 def nivelUsuario():
     """Funçao para adicionar o nível do usuário"""
     nivel = int(input("1 - Bibliotecário\n"
@@ -86,20 +81,31 @@ def nivelUsuario():
     return nivel
 
 
+def buscarNivelUsuario(bancoDeDados, usuario):
+    """Função para buscar o nível do usuário"""
+    nivel = bancoDeDados[usuario][1]
+    return nivel
+
+
 def modificarNivelUsuario(bancoDeDados):
     """Função para modificar o nível do usuário"""
     print("")
-    print("Usuários cadastrados:")
-    listarUsuarios(bancoDeDados)
-    usuario = input("\nQual usuário deseja modificar? ")
-    print("")
-    print("Para qual nível deseja modificar?")
-    nivelAntigo = bancoDeDados[usuario][1]
-    bancoDeDados[usuario] = (bancoDeDados[usuario][0], nivelUsuario())
-    log(usuario, "modificou_nível_de_usuário")
-    print("Nível do usuário '", usuario, "' modificado de ",
-          nivelAntigo, " para ", bancoDeDados[usuario][1], ".\n")
-    return bancoDeDados
+    continuar = False
+    while continuar == False:
+        print("Usuários cadastrados:")
+        listarNivelUsuarios(bancoDeDados)
+        usuario = input("\nQual usuário deseja modificar? ")
+        print("")
+        if usuario == "adm":
+            print("Não é possível modificar o nível deste usuário.\n")
+        else:
+            print("Para qual nível deseja modificar?")
+            nivelAntigo = bancoDeDados[usuario][1]
+            bancoDeDados[usuario] = (bancoDeDados[usuario][0], nivelUsuario())
+            log(usuario, "modificou_nível_de_usuário")
+            print("Nível do usuário '", usuario, "' modificado de ",
+                nivelAntigo, " para ", bancoDeDados[usuario][1], ".\n")
+            return bancoDeDados
 
 
 def listarUsuarios(bancoDeDados):
@@ -107,9 +113,14 @@ def listarUsuarios(bancoDeDados):
         print(chave)
 
 
+def listarNivelUsuarios(bancoDeDados):
+    for pares in bancoDeDados.items():
+        print(pares[0], "-", pares[1][1])
+
+
 def adicionarUsuario(bancoDeDados, usuario):
     """Função para adicionar um novo usuário do bando de dados"""
-    login = input("\nDigite o login do usuário: ")
+    login = input("\nDigite o login do usuário a ser adicionado: ")
     achou = False
     for x in bancoDeDados:
         if login == x:
@@ -124,16 +135,22 @@ def adicionarUsuario(bancoDeDados, usuario):
         print("\nLogin já cadastrado.\n")
     return bancoDeDados
 
+
 def removerUsuario(bancoDeDados, usuario):
     """Função para remover um usuário do bando de dados"""
-    print("\nQual usuário deseja remover?")
-    listarUsuarios(bancoDeDados)
-    login = input("\nDigite o login do usuário: ")
     print("")
-    if login in bancoDeDados:
-        bancoDeDados.pop(login)
-        log(usuario, "removeu_usuário")
-        print("Usuário removido com sucesso.\n")
-    else:
-        print("Usuário não consta no sistema.\n")
-    return bancoDeDados
+    continuar = False
+    while continuar == False:
+        print("Qual usuário deseja remover?")
+        listarUsuarios(bancoDeDados)
+        login = input("\nDigite o login do usuário: ")
+        print("")
+        if login == "adm":
+            print("Não é possível remover este usuário.\n")
+        elif login in bancoDeDados:
+            bancoDeDados.pop(login)
+            log(usuario, "removeu_usuário")
+            print("Usuário removido com sucesso.\n")
+            return bancoDeDados
+        else:
+            print("Usuário não consta no sistema.\n")

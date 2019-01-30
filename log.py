@@ -35,7 +35,7 @@ def tipoBuscaLog():
                       "1 - Data de execução\n"
                       "2 - Usuário "))
     if opcao == 1:
-        data = input("\nDidite a data: (dd-mm-aaa)")
+        data = input("\nDidite a data: (dd-mm-aaaa)")
         print("")
         return data
     elif opcao == 2:
@@ -45,6 +45,7 @@ def tipoBuscaLog():
     else:
         print("\nOpção não encontrada, digite novamente.")
         return tipoBuscaLog()
+
 
 def buscarLog():
     """Função para buscar o log"""
